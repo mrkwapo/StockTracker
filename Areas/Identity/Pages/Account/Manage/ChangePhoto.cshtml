@@ -1,0 +1,85 @@
+﻿@page
+@model MultiUserMVC.Areas.Identity.Pages.Account.Manage.ChangePhotoModel
+@{
+    ViewData["ActivePage"] = ManageNavPages.ChangePhoto;
+}
+
+@*Adding form*@
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <h4 class="btn btn-warning"> Update Profile Photo</h4>
+
+            <div class="form-group">
+                @*<label> Update Photo</label>*@
+                <input type="file" id="upload" class="form-control" required />
+                <input type="hidden" id="ImgUrl" name="ImgUrl" value="" class="form-control" />
+                <span asp-validation-for="Input.Photo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                @*Needed by Croppie to display cropping canvas *@
+                <div id="upload-demo" style="width:350px"></div>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary upload-result">Update</button>
+        </form>
+    </div>
+
+</div>
+
+@*Using JavaScript to crop image and ajax to handle form submission*@
+
+<script>
+    //Defining Croppie canvas
+    $uploadCrop = $('#upload-demo').croppie({
+        enableExif: true,
+        viewport: {
+            width: 240,
+            height: 240,
+            type: 'circle'
+        },
+        boundary: {
+            width: 300,
+            height: 300
+        }
+    });
+    //Bind Image to canvas using Croppie when the file input tag event is triggered
+    $('#upload').on('change', function () {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $uploadCrop.croppie('bind', {
+                url: e.target.result
+            }).then(function () {
+                console.log('jQuery bind complete');
+            });
+        }
+        reader.readAsDataURL(this.files[0]);
+    });
+    //Copy cropped image and submit form data with ajax
+    $('.upload-result').on('click', function (ev) {
+        $uploadCrop.croppie('result', {
+            type: 'canvas',
+            size: 'viewport'
+        }).then(function (resp) {
+            console.log("Image Cropped: " + resp);
+            var img1 = resp.substring(22); // using the default file extension. Example: png
+            //Set the new value for the form input tag with id=ImgUrl
+            $("#ImgUrl").val(img1);
+            console.log("Trimmed Image: " + img1)
+            var myData = new FormData(this);
+            $.ajax({
+                url: "/Manage/ChangePhoto",
+                type: "POST",
+                data: myData,
+                cache: false, //Disabling pages from being cached
+                contentType: false, //The content type used when sending data to the server
+                success: function (data) {
+                    //Do Something here
+                }
+            });
+        });
+    });
+</script>

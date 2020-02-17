@@ -1,0 +1,136 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Name"></label>
+                <input asp-for="Input.Name" class="form-control" />
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Shareholder"></label>
+                <select asp-for="Input.Shareholder" class="form-control">
+                    <option value="Indiviual">Indiviual</option>
+                    <option value="Institution">Institution</option>
+                    <option value="Other">Other</option>
+
+                </select>
+                <span asp-validation-for="Input.Shareholder" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Photo"></label>
+                <input type="file" id="upload" class="form-control" required />
+                <input type="hidden" id="ImgUrl" name="ImgUrl" value="" class="form-control" />
+                <span asp-validation-for="Input.Photo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                @*Needed by Croppie to display cropping canvas *@
+                <div id="upload-demo" style="width:350px"></div>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary upload-result">Register</button>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@*Using JavaScript to crop image and ajax to handle form submission*@
+
+<script>
+    //Defining Croppie canvas
+    $uploadCrop = $('#upload-demo').croppie({
+        enableExif: true,
+        viewport: {
+            width: 240,
+            height: 240,
+            type: 'circle'
+        },
+        boundary: {
+            width: 300,
+            height: 300
+        }
+    });
+
+
+    //Bind Image to canvas using Croppie when the file input tag event is triggered
+    $('#upload').on('change', function () {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $uploadCrop.croppie('bind', {
+                url: e.target.result
+            }).then(function () {
+                console.log('jQuery bind complete');
+            });
+        }
+        reader.readAsDataURL(this.files[0]);
+    });
+
+    //Copy cropped image and submit form data with ajax
+
+    $('.upload-result').on('click', function (ev) {
+        $uploadCrop.croppie('result', {
+            type: 'canvas',
+            size: 'viewport'
+        }).then(function (resp) {
+
+            console.log("Image Cropped: " + resp);
+
+            var img1 = resp.substring(22); // using the default file extension. Example: png
+
+            //Set the new value for the form input tag with id=ImgUrl
+            $("#ImgUrl").val(img1);
+
+            console.log("Trimmed Image: " + img1)
+
+            var myData = new FormData(this);
+
+            $.ajax({
+                url: "/Identity/Account/Register",
+                type: "POST",
+                data: myData,
+                cache: false, //Disabling pages from being cached
+                contentType: false, //The content type used when sending data to the server
+                success: function (data) {
+                    //Do Something here
+                }
+            });
+
+        });
+    });
+</script>
