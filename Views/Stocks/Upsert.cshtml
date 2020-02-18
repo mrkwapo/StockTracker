@@ -2,7 +2,7 @@
 @model MultiUserMVC.Models.Stock
 
 <br />
-<h2 class="text-info">@(Model.Id!=0 ? "Edit" : "Create") Book</h2>
+<h2 class="text-info"> Update Stock List</h2>
 <br />
 
 <div class="border container" style="padding:30px;">
@@ -39,10 +39,81 @@
                 <span asp-validation-for="Change" class="text-danger"></span>
             </div>
         </div>
+
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Change_Percentage"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Change_Percentage" class="form-control" />
+                <span asp-validation-for="Change_Percentage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Currency"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Currency" class="form-control" />
+                <span asp-validation-for="Currency" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Market_Time"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Market_Time" class="form-control" />
+                <span asp-validation-for="Market_Time" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Volume"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Volume" class="form-control" />
+                <span asp-validation-for="Volume" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Average_Volume"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Average_Volume" class="form-control" />
+                <span asp-validation-for="Average_Volume" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Market_Cap"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Market_Cap" class="form-control" />
+                <span asp-validation-for="Market_Cap" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="ScrapeDate"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="ScrapeDate" class="form-control" />
+                <span asp-validation-for="ScrapeDate" class="text-danger"></span>
+            </div>
+        </div>
+
         <div class="form-group row">
             <div class="col-3 offset-3">
                 <button type="submit" class="btn btn-primary form-control">
-                    @Model.Id!=0 ? "Edit" : "Create")
+                    @(Model.Id!=0 ? "Update" : "Create")
                 </button>
             </div>
             <div class="col-3">

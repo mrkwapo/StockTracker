@@ -11,9 +11,9 @@
             <h2 class="text-info">Stock List</h2>
         </div>
         <div class="col-3 offset-3">
-            <a asp-action="Upsert" asp-controller="Stocks" class="btn btn-info form-control text-white">
-                Update Stocks
-            </a>
+            <form method="post">
+                <button type="submit" asp-controller="Stocks" asp-action="Scrape" class="btn btn-info form-control text-white">Update Stocks</button>
+            </form>
         </div>
         <div class="col-12 border p-3">
 
