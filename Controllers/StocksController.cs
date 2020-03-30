@@ -57,7 +57,7 @@ namespace MultiUserMVC.Controllers
 
             IWebDriver driver = new ChromeDriver(option);
 
-            var scraper = new SQL();
+            var scraper = new Scraper();
 
             scraper.LoginYahoo(driver);
 
@@ -89,7 +89,7 @@ namespace MultiUserMVC.Controllers
         #endregion
     }
 
-    public class SQL
+    public class Scraper
     {
         public void LoginYahoo(IWebDriver driver)
         {
