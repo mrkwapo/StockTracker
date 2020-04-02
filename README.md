@@ -1,7 +1,7 @@
 # Retrospective of this Project
 January 28, 2020 - February 17, 2020
 
-Using Agile Methodoligies, I used Trello to break down each epic into stories in which I completed 3 one week sprints.
+Using Agile Methodoligies, I used Trello to break down each epic into stories in which I completed in three one week sprints.
 
 ## Sprint 1 ##
 ### Epic 1: Scrape Stock Data from Yahoo's Finance Page ###
