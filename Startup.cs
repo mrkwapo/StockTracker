@@ -1,19 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using MultiUserMVC.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MultiUserMVC.Areas.Identity.Models;
+using MultiUserMVC.Data;
 using MultiUserMVC.Models;
+using Polly;
+using System;
 
 namespace MultiUserMVC
 {
@@ -43,12 +38,24 @@ namespace MultiUserMVC
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
+
+            // Registered API client for AJAX call.
+            // Configuration - base address & content type.
+            services.AddHttpClient("News", client => {
+                client.BaseAddress = new Uri("https://newsapi.org/");
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            })
+            .AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(new[] {
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(5),
+                TimeSpan.FromSeconds(10)
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            /*if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -58,8 +65,9 @@ namespace MultiUserMVC
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
-            app.UseHttpsRedirection();
+            }*//*
+            // app.UseHttpsRedirection();*/
+
             app.UseStaticFiles();
 
             app.UseRouting();

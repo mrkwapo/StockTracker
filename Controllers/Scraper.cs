@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Web.UI;
-using System.Globalization;
 using System.Collections.Generic;
 using MultiUserMVC.Models;
 using OpenQA.Selenium;
@@ -22,7 +20,7 @@ namespace MultiUserMVC.Controllers
 
             driver.Navigate().GoToUrl(@"https://login.yahoo.com/config/login?.intl=us&.lang=en-US&.src=finance&.done=https%3A%2F%2Ffinance.yahoo.com%2F");
 
-            var userNameInputBox = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("login-username")));
+            var userNameInputBox = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("login-username")));
 
             userNameInputBox.SendKeys("mrkwapo@yahoo.com");
 
@@ -30,18 +28,18 @@ namespace MultiUserMVC.Controllers
 
             usernameNextButton.SendKeys(Keys.Enter);
 
-            var passwordInputBox = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("login-passwd")));
+            var passwordInputBox = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("login-passwd")));
 
             passwordInputBox.SendKeys("Careerdevs1!");
 
             var passwordNextButton = driver.FindElement(By.Id("login-signin"));
             passwordNextButton.SendKeys(Keys.Enter);
 
-            var watchlistLink = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.LinkText("My Watchlist")));
+            var watchlistLink = wait.Until(ExpectedConditions.ElementIsVisible(By.LinkText("My Watchlist")));
 
             watchlistLink.SendKeys(Keys.Enter);
 
-            var stocksTable = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("pf-detail-table")));
+            var stocksTable = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("pf-detail-table")));
 
             System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> data = stocksTable.FindElements(By.TagName("td"));
             return data;
