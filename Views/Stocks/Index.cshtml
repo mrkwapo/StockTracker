@@ -49,15 +49,12 @@ else
 
 @section Scripts{
     <script src="~/js/stockList.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#btnload').click(async function () {
-            $(await this).html('<img src="http://www.bba-reman.com/images/fbloader.gif" />');
-            return false;
-        });
-    })
-</script>
+    <script type="text/javascript">
+        $(function () {
+            $('#btnload').click(async function () {
+                $(await this).html('<img src="http://www.bba-reman.com/images/fbloader.gif" />');
+                return false;
+            });
+        })
+    </script>
 }
-
-
-

@@ -1,5 +1,4 @@
-﻿
-@model MultiUserMVC.Models.Stock
+﻿@model MultiUserMVC.Models.Stock
 
 <br />
 <h2 class="text-info"> Update Stock</h2>
@@ -113,7 +112,7 @@
         <div class="form-group row">
             <div class="col-3 offset-3">
                 <button type="submit" class="btn btn-primary form-control">
-                    @(Model.Id!=0 ? "Update" : "Create")
+                    @(Model.Id != 0 ? "Update" : "Create")
                 </button>
             </div>
             <div class="col-3">
@@ -126,4 +125,3 @@
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
 }
-

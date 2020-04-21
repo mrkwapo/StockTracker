@@ -9,19 +9,56 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="text-center">       
+    <div class="text-center">
 
-        <p>Your are now logged in. Use the Stock tab to browse or update stock records!</p>
+        <p>You're logged in! Use the Stocks tab to browse or update stock records.</p>
+        <h1 class="display-4">Business News</h1>
     </div>
+    <div class="text-left">
+
+        @foreach (var article in Model.Articles)
+        {
+            <div>
+                <center>
+                    <img src="@article.urlToImage" />
+                    <h4>@article.Title</h4>
+                </center>
+                <div><b>Summary:</b> @article.Content</div>
+                <div><i>Published at: @article.PublishedAt</i></div>
+                <a href="@article.Url" target="_blank">Full Article</a>
+                <hr />
+            </div>
+        }
+    </div>
+
+
 }
 else
 {
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
 
-    <p>Create an account and login to view stock records.</p>
-</div>
+        <p>Create an account and login to view stock records.</p>
+    </div>
+
+    <div class="text-left">
+
+        <h1 class="display-4 text-center">Business News</h1>
+        @foreach (var article in Model.Articles)
+        {
+            <div>
+                <center>
+                    <img src="@article.urlToImage" />
+                    <h4>@article.Title</h4>
+                </center>
+                <div><b>Summary:</b> @article.Content</div>
+                <div><i>Published at: @article.PublishedAt</i></div>
+                <a href="@article.Url" target="_blank">Full Article</a>
+                <hr />
+            </div>
+        }
+
+
+    </div>
 
 }
-
-

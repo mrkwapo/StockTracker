@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#DT_load').DataTable({
         "ajax": {
-            "url": "/stocks/getall/",
+            "url": "/stocks/getall",
             "type": "GET",
             "datatype": "json"
         },
