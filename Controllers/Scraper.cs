@@ -115,7 +115,7 @@ namespace MultiUserMVC.Controllers
                 //Establishing a connection and inserting the data of each stock to the SQL database accordingly
                 SqlConnection conn = new SqlConnection();
 
-                conn.ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MultiUserMVCDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+                conn.ConnectionString = @"Server=tcp:stocktrackersqlserver.database.windows.net,1433;Initial Catalog=MultiUserMVCDB;Persist Security Info=False;User ID=mrkwapo;Password=BD+7d7dP;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
                 conn.Open();
 
